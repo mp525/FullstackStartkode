@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from 'graphql-tools';
 import { resolvers } from './resolvers';
 
-const typeDefs = `
+const typeDefs = `#graphql
     type Friend {
         id: ID
         firstName: String
@@ -26,6 +26,7 @@ const typeDefs = `
         getFriend(email: String) : Friend!
         
     }
+
     input FriendInput {
         firstName: String!
         lastName: String!
@@ -38,12 +39,22 @@ const typeDefs = `
         password: String
         email: String!
     }
+    input PositionInput {
+        email: String!
+        longitude: Float!
+        latitude: Float!
+    }
+
     type Mutation {
         """
         Allows anyone (non authenticated users) to create a new friend
         """
         createFriend(input: FriendInput): Friend
         editFriend(input: FriendEditInput): Friend
+        deleteFriend(input: String): Friend
+
+        addOrUpdatePosition(input: PositionInput): Boolean
+        
         
     }
 `;
